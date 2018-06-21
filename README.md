@@ -3,31 +3,17 @@
 > Proxies to a heroku web dyno, starting up required dynos transparently.
 
 ## Purpose
-- What problem does this module solve? At least a few sentences.
-PLEASE_FILL_IN_HERE
+Hit the /start route and it'll spin up your heroku dyno, 301 redirecting you
+when it's up.
 
 ## Usage
 
-```js
-// Several examples of usage.
-// Usually copying and pasting code from the tests and making the code standalone suffices.
-// PLEASE_FILL_IN_HERE
-```
+- Push the app to heroku.
+- Set the env vars:
+  - `HEROKU_TOKEN` - heroku api token
+  - `HEROKU_APP_NAME` - app name
+  - `PROXY_URL` - redirect here
 
-## API
-
-PLEASE_FILL_IN_HERE
-
-Note: To regenerate this section from the jsdoc run `npm run docs` and paste
-the output above.
-
-## Installation
-
-This module is installed via npm:
-
-``` bash
-$ npm install heroku-transparent-up
-```
 ## License
 
 The BSD License
@@ -60,4 +46,3 @@ LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
 ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
