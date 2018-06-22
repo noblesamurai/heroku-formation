@@ -10,7 +10,8 @@
     "pretest": "semistandard --env mocha",
     "test": "mocha --recursive test",
     "watch": "mocha --recursive --watch test",
-    "docs": "jsdoc2md index.js"
+    "docs": "jsdoc2md index.js",
+    "start": "node src/index"
   },
   "homepage": "https://github.com/noblesamurai/heroku-transparent-up",
   "repository": {
@@ -24,14 +25,21 @@
     "node": "8.x",
     "npm": "5.x"
   },
-  "dependencies": {},
+  "dependencies": {
+    "express": "^4.16.3",
+    "heroku-client": "^3.0.6",
+    "promise-poller": "^1.6.0"
+  },
   "devDependencies": {
     "chai": "^3.5.0",
     "dirty-chai": "^1.2.2",
     "jsdoc-to-markdown": "~3.0.0",
     "mocha": "^5.2.0",
+    "nock": "^9.3.3",
     "nyc": "^12.0.2",
-    "semistandard": "*"
+    "proxyquire": "^2.0.1",
+    "semistandard": "*",
+    "supertest": "^3.1.0"
   },
   "keywords": [],
   "nyc": {

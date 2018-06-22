@@ -1,33 +1,38 @@
 # Heroku-transparent-up [![Build Status](https://secure.travis-ci.org/noblesamurai/heroku-transparent-up.png?branch=master)](http://travis-ci.org/noblesamurai/heroku-transparent-up) [![NPM version](https://badge-me.herokuapp.com/api/npm/heroku-transparent-up.png)](http://badges.enytc.com/for/npm/heroku-transparent-up)
 
-> Proxies to a heroku web dyno, starting up required dynos transparently.
+> Enacts a requested dyno formation on heroku across multiple apps before 301 redirecting.
 
 ## Purpose
-- What problem does this module solve? At least a few sentences.
-PLEASE_FILL_IN_HERE
+Hit the `/start` route and it'll scale your heroku dyno(s), 301 redirecting you
+when it's done.
 
 ## Usage
 
+- Push the app to heroku.
+- Set the env var:
+  - `HEROKU_TOKEN` - heroku api token
+
+```
+GET /start?redirect_to=mylocation&formation=<URIencodedFormationAsJSON>
+```
+- The `formation` query string param should be  a json stringified, uri encoded string of the format:
 ```js
-// Several examples of usage.
-// Usually copying and pasting code from the tests and making the code standalone suffices.
-// PLEASE_FILL_IN_HERE
+{
+  app1: formation1,
+  app2: formation2,
+  /*...*/
+}
+```
+where the formation is [compatible with this doco](https://devcenter.heroku.com/articles/platform-api-reference#formation).
+
+Valid example:
+```js
+{
+  my-heroku-app: [{ type: 'web', quantity: 1 }],
+  my-heroku-api: [{ type: 'web', quantity: 1 }, { type: 'worker', quantity: 3 }]
+}
 ```
 
-## API
-
-PLEASE_FILL_IN_HERE
-
-Note: To regenerate this section from the jsdoc run `npm run docs` and paste
-the output above.
-
-## Installation
-
-This module is installed via npm:
-
-``` bash
-$ npm install heroku-transparent-up
-```
 ## License
 
 The BSD License
@@ -60,4 +65,3 @@ LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
 ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
