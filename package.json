@@ -13,13 +13,13 @@
     "docs": "jsdoc2md src/*.js",
     "start": "node src/index"
   },
-  "homepage": "https://github.com/noblesamurai/heroku-transparent-up",
+  "homepage": "https://github.com/noblesamurai/heroku-formation",
   "repository": {
     "type": "git",
-    "url": "git://github.com/noblesamurai/heroku-transparent-up.git"
+    "url": "git://github.com/noblesamurai/heroku-formation.git"
   },
   "bugs": {
-    "url": "https://github.com/noblesamurai/heroku-transparent-up/issues"
+    "url": "https://github.com/noblesamurai/heroku-formation/issues"
   },
   "engines": {
     "node": "8.x",
