@@ -1,18 +1,37 @@
 # Heroku-transparent-up [![Build Status](https://secure.travis-ci.org/noblesamurai/heroku-transparent-up.png?branch=master)](http://travis-ci.org/noblesamurai/heroku-transparent-up) [![NPM version](https://badge-me.herokuapp.com/api/npm/heroku-transparent-up.png)](http://badges.enytc.com/for/npm/heroku-transparent-up)
 
-> Proxies to a heroku web dyno, starting up required dynos transparently.
+> Enacts a requested dyno formation on heroku across multiple apps before 301 redirecting.
 
 ## Purpose
-Hit the /start route and it'll spin up your heroku dyno, 301 redirecting you
-when it's up.
+Hit the `/start` route and it'll scale your heroku dyno(s), 301 redirecting you
+when it's done.
 
 ## Usage
 
 - Push the app to heroku.
-- Set the env vars:
+- Set the env var:
   - `HEROKU_TOKEN` - heroku api token
-  - `HEROKU_APP_NAME` - app name
-  - `PROXY_URL` - redirect here
+
+```
+GET /start?redirect_to=mylocation&formation=<URIencodedFormationAsJSON>
+```
+- The `formation` query string param should be  a json stringified, uri encoded string of the format:
+```js
+{
+  app1: formation1,
+  app2: formation2,
+  /*...*/
+}
+```
+where the formation is [compatible with this doco](https://devcenter.heroku.com/articles/platform-api-reference#formation).
+
+Valid example:
+```js
+{
+  my-heroku-app: [{ type: 'web', quantity: 1 }],
+  my-heroku-api: [{ type: 'web', quantity: 1 }, { type: 'worker', quantity: 3 }]
+}
+```
 
 ## License
 
