@@ -3,6 +3,7 @@ const promisePoller = require('promise-poller').default;
 const checkFormation = require('./check-formation');
 
 /**
+ * @private
 * @param {object} formation { quantity: 2, type: 'standard-1' }
 */
 function scale (heroku, app, formation) {
@@ -18,8 +19,12 @@ function waitForScale (heroku, app, formation) {
     strategy: 'linear-backoff'
   });
 }
+/**
+ * @module heroku-formation
+ */
 
 /**
+ * @alias applyFormation
  * @async
  * Given an app and dyno formation, scale it and wait until formation in place.
  * @param {string} app app name
@@ -28,7 +33,7 @@ function waitForScale (heroku, app, formation) {
  */
 module.exports = function applyFormation (heroku, app, formation) {
   return Promise.all(Object.keys(formation).map(async dyno => {
-    await scale(heroku, app, formation);
-    return waitForScale(heroku, app, formation);
+    await scale(heroku, dyno, formation);
+    return waitForScale(heroku, dyno, formation);
   }));
 };
