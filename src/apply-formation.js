@@ -33,7 +33,7 @@ function waitForScale (heroku, app, formation) {
  */
 module.exports = function applyFormation (heroku, app, formation) {
   return Promise.all(Object.keys(formation).map(async dyno => {
-    await scale(heroku, dyno, formation);
-    return waitForScale(heroku, dyno, formation);
+    await scale(heroku, app, formation);
+    return waitForScale(heroku, app, formation);
   }));
 };
