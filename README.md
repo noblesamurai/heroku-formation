@@ -1,4 +1,4 @@
-# Heroku-transparent-up [![Build Status](https://secure.travis-ci.org/noblesamurai/heroku-transparent-up.png?branch=master)](http://travis-ci.org/noblesamurai/heroku-transparent-up) [![NPM version](https://badge-me.herokuapp.com/api/npm/heroku-transparent-up.png)](http://badges.enytc.com/for/npm/heroku-transparent-up)
+# Heroku-formation [![Build Status](https://secure.travis-ci.org/noblesamurai/heroku-formation.png?branch=master)](http://travis-ci.org/noblesamurai/heroku-formation) [![NPM version](https://badge-me.herokuapp.com/api/npm/heroku-formation.png)](http://badges.enytc.com/for/npm/heroku-formation)
 
 > Enacts a requested dyno formation on heroku across multiple apps.
 
@@ -34,10 +34,12 @@ The formation should be of the format:
 where the formation is compatible with [this doco](https://devcenter.heroku.com/articles/platform-api-reference#formation).
 
 ## API
+## heroku-formation
+<a name="module_heroku-formation"></a>
 
 ## applyFormation(app, object) ⇒ <code>Promise</code>
-**Kind**: global function  
-**Returns**: <code>Promise</code> - fulfilled when scale complete.  
+**Kind**: global function
+**Returns**: <code>Promise</code> - fulfilled when scale complete.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -48,13 +50,15 @@ where the formation is compatible with [this doco](https://devcenter.heroku.com/
 Check whether app is in requested formation."></a>
 
 ## checkFormation
-Check whether app is in requested formation.(heroku, app, formation) ⇒ <code>Boolean</code>
-**Kind**: global function  
-| Param | Type | | --- | --- |
-| heroku | <code>Heroku</code> | 
-| app | <code>string</code> | 
-| formation | <code>object</code> | 
+Check whether app is in requested formation.(heroku, app, formation) ⇒ <code>Promise<Boolean></code>
+**Kind**: global function
+**Returns**: <code>Promise<Boolean></code>
 
+| Param | Type |
+| --- | --- |
+| heroku | <code>Heroku</code> |
+| app | <code>string</code> |
+| formation | <code>object</code> |
 
 ## License
 

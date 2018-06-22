@@ -10,7 +10,7 @@ const path = require('path');
  * @param {Heroku} heroku
  * @param {string} app
  * @param {object} formation
- * @return {Boolean}
+ * @return {Promise.<Boolean>}
  */
 module.exports = async function checkFormation (heroku, app, formation) {
   const response = await heroku.get(path.join('/apps', app, 'formation'));
