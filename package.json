@@ -31,6 +31,7 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "dirty-chai": "^1.2.2",
+    "heroku-client": "^3.0.6",
     "jsdoc-to-markdown": "^4.0.1",
     "mocha": "^5.2.0",
     "nock": "^9.3.3",
