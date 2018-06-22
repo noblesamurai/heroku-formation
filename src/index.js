@@ -1,39 +1,27 @@
 const express = require('express');
-const Heroku = require('heroku-client');
 const app = express();
-const heroku = new Heroku({ token: process.env.HEROKU_TOKEN });
-const appName = process.env.HEROKU_APP_NAME;
-const path = require('path');
-const promisePoller = require('promise-poller').default;
 
-function startApp (appName) {
-  const p = path.join('/apps', appName, 'formation', 'web');
-  return heroku.patch(p, {
-    body: {
-      quantity: 1
-    }
-  });
-}
+const { HEROKU_TOKEN: token } = process.env;
 
-async function checkApp (appName) {
-  const _path = path.join('/apps', appName, 'dynos', 'web.1');
-  const info = await heroku.get(_path);
-  if (info.state === 'up') return;
-  throw (new Error('App not up.'));
-}
+const Heroku = require('heroku-client');
+const heroku = new Heroku({ token });
+const applyFormation = require('./apply-formation');
 
 app.get('/start', async function (req, res) {
   try {
-    await startApp(appName);
-    await promisePoller({
-      taskFn: checkApp.bind(null, appName),
-      strategy: 'linear-backoff'
-    });
-    return res.redirect(301, process.env.PROXY_URL);
+    if (!req.query.formation || !req.query.redirect_to) return res.sendStatus(422);
+    const formation = JSON.parse(req.query.formation);
+    const apps = Object.keys(formation);
+    await Promise.all(apps.map(app => applyFormation(heroku, app, formation[app])));
+    return res.redirect(301, req.query.redirect_to);
   } catch (err) {
     console.error(err);
     res.status(500).send('There was a problem.  Check your logs.');
   }
 });
 
-app.listen(process.env.PORT || 3000);
+if (require.main === module) {
+  app.listen(process.env.PORT || 3000);
+} else {
+  module.exports = app;
+}
