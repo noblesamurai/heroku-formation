@@ -67,4 +67,35 @@ describe('check-formation', function () {
       expect(result).to.equal(false);
     });
   });
+
+  describe('returns false - multiple dyno types', function () {
+    before(function () {
+      nock('https://api.heroku.com')
+        .get('/apps/example/dynos')
+        .times(3)
+        .reply(200, [
+          {
+            name: 'web.1',
+            size: 'standard-1x',
+            state: 'up',
+            type: 'web',
+            updated_at: '2012-01-01t12:00:00z'
+          },
+          {
+            name: 'worker.1',
+            size: 'performance-m',
+            state: 'starting',
+            type: 'worker',
+            updated_at: '2012-01-01t12:00:00z'
+          }
+        ]);
+    });
+    it('if app does not have requested formation', async function () {
+      const result = await checkFormation(this.heroku, 'example', [
+        { type: 'web', size: 'standard-1x', quantity: 1 },
+        { type: 'worker', size: 'performance-m', quantity: 1 }
+      ]);
+      expect(result).to.equal(false);
+    });
+  });
 });

@@ -1,6 +1,7 @@
 const path = require('path');
 const promisePoller = require('promise-poller').default;
 const checkFormation = require('./check-formation');
+const validateFormation = require('../lib/validate-formation');
 
 /**
  * @private
@@ -24,16 +25,15 @@ function waitForScale (heroku, app, formation) {
  */
 
 /**
- * @alias applyFormation
  * @async
+ * @alias applyFormation
  * Given an app and dyno formation, scale it and wait until formation in place.
  * @param {string} app app name
- * @param {formation} object
+ * @param {Array.<object>} formation [{ type: 'web', quantity: 1}, { type: 'worker', quantity: 2}]
  * @return {Promise} fulfilled when scale complete.
  */
-module.exports = function applyFormation (heroku, app, formation) {
-  return Promise.all(Object.keys(formation).map(async dyno => {
-    await scale(heroku, app, formation);
-    return waitForScale(heroku, app, formation);
-  }));
+module.exports = async function applyFormation (heroku, app, formation) {
+  validateFormation(formation);
+  await scale(heroku, app, formation);
+  return waitForScale(heroku, app, formation);
 };
