@@ -13,9 +13,12 @@ const path = require('path');
  * @return {Promise.<Boolean>}
  */
 module.exports = async function checkFormation (heroku, app, formation) {
-  const response = await heroku.get(path.join('/apps', app, 'formation'));
+  const response = await heroku.get(path.join('/apps', app, 'dynos'));
   return formation.reduce((acc, dynoFormation) => {
     if (!acc) return false;
-    return dynoFormation.quantity === response.find(a => a.type === dynoFormation.type).quantity;
+    const upCount = response.filter(d =>
+      d.type === dynoFormation.type && d.state === 'up'
+    ).length;
+    return dynoFormation.quantity === upCount;
   }, true);
 };

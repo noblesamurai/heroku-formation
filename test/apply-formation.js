@@ -16,11 +16,11 @@ describe('apply-formation', function () {
     success = nock('https://api.heroku.com')
       .patch('/apps/exampleApp/formation')
       .reply(200)
-      .get('/apps/exampleApp/formation')
+      .get('/apps/exampleApp/dynos')
       .times(3)
-      .reply(200, [{ type: 'web', quantity: 0 }])
-      .get('/apps/exampleApp/formation')
-      .reply(200, [{ type: 'web', quantity: 1 }]);
+      .reply(200, [{ type: 'web', state: 'starting' }])
+      .get('/apps/exampleApp/dynos')
+      .reply(200, [{ type: 'web', state: 'up' }]);
   });
   after(function () {
     nock.cleanAll();
