@@ -34,31 +34,30 @@ The formation should be of the format:
 where the formation is compatible with [this doco](https://devcenter.heroku.com/articles/platform-api-reference#formation).
 
 ## API
-## heroku-formation
-<a name="module_heroku-formation"></a>
 
-## applyFormation(app, object) ⇒ <code>Promise</code>
-**Kind**: global function
-**Returns**: <code>Promise</code> - fulfilled when scale complete.
+## applyFormation
+Given an app and dyno formation, scale it and wait until formation in place.(app, formation) ⇒ <code>Promise</code>
+**Kind**: global function  
+**Returns**: <code>Promise</code> - fulfilled when scale complete.  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | app | <code>string</code> | app name |
-| object | <code>formation</code> |  |
+| formation | <code>Array.&lt;object&gt;</code> | [{ type: 'web', quantity: 1}, { type: 'worker', quantity: 2}] |
 
-<a name="checkFormation
-Check whether app is in requested formation."></a>
+<a name="checkFormation"></a>
 
-## checkFormation
-Check whether app is in requested formation.(heroku, app, formation) ⇒ <code>Promise<Boolean></code>
-**Kind**: global function
-**Returns**: <code>Promise<Boolean></code>
+## checkFormation(heroku, app, formation) ⇒ <code>Promise.&lt;Boolean&gt;</code>
+**Kind**: global function  
+**See**: https://devcenter.heroku.com/articles/platform-api-reference#formation
+Check whether app is in requested formation.  
 
 | Param | Type |
 | --- | --- |
-| heroku | <code>Heroku</code> |
-| app | <code>string</code> |
-| formation | <code>object</code> |
+| heroku | <code>Heroku</code> | 
+| app | <code>string</code> | 
+| formation | <code>Array.&lt;object&gt;</code> | 
+
 
 ## License
 
