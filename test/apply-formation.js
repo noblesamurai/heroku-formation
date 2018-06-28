@@ -4,7 +4,7 @@ const proxyquire = require('proxyquire');
 const applyFormation = proxyquire('../src/apply-formation', {
   'promise-poller': {
     default: async (config) => {
-      while (!await config.taskFn()) {}
+      while (!await config.taskFn().then(() => true).catch(_err => false)) {}
       return true;
     }
   }

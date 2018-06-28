@@ -16,7 +16,10 @@ function scale (heroku, app, formation) {
 
 function waitForScale (heroku, app, formation) {
   return promisePoller({
-    taskFn: checkFormation.bind(null, heroku, app, formation),
+    taskFn: async () => {
+      const result = await checkFormation(heroku, app, formation);
+      return result ? Promise.resolve() : Promise.reject(new Error('got false'));
+    },
     strategy: 'linear-backoff'
   });
 }
