@@ -18,20 +18,17 @@ const heroku = new Heroku({ token: 'mytoken' });
 const { applyFormation, checkFormation } = require('heroku-formation');
 
 async function main () {
-  await applyFormation(heroku, 'appName', [{ type: 'web', quantity: 1 }]);
+  await applyFormation(heroku, 'appName', [{ type: 'web', quantity: 1 }, { type: 'worker', quantity: 2}]);
   // We get here after formation is enacted.
-  const result = await checkFormation(heroku, 'appName', [{ type: 'web', quantity: 2 }]);
-  // result is false
+  await checkFormation(heroku, 'appName', [{ type: 'web', quantity: 2 }]); // false
+  //  false
+  await checkFormation(heroku, 'appName', [{ type: 'web', quantity: 1 }, { type: 'worker', quantity: 2 }]); // true
 }
 ```
 
-The formation should be of the format:
-{
-    web: formation1,
-    worker: formation2,
-        /*...*/
-}
-where the formation is compatible with [this doco](https://devcenter.heroku.com/articles/platform-api-reference#formation).
+See [this
+doco](https://devcenter.heroku.com/articles/platform-api-reference#formation)
+for the format of the formation.
 
 ## API
 
@@ -54,9 +51,9 @@ Check whether app is in requested formation.
 
 | Param | Type |
 | --- | --- |
-| heroku | <code>Heroku</code> | 
-| app | <code>string</code> | 
-| formation | <code>Array.&lt;object&gt;</code> | 
+| heroku | <code>Heroku</code> |
+| app | <code>string</code> |
+| formation | <code>Array.&lt;object&gt;</code> |
 
 
 ## License

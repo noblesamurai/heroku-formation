@@ -20,7 +20,9 @@ module.exports = async function checkFormation (heroku, app, formation) {
   return formation.reduce((acc, dynoFormation) => {
     if (!acc) return false;
     const upCount = response.filter(d =>
-      d.type === dynoFormation.type && d.state === 'up'
+      d.type === dynoFormation.type &&
+      (!dynoFormation.size || d.size === dynoFormation.size) &&
+      d.state === 'up'
     ).length;
     return dynoFormation.quantity === upCount;
   }, true);
