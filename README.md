@@ -1,5 +1,5 @@
-# Heroku-formation [![Build Status](https://secure.travis-ci.org/noblesamurai/heroku-formation.png?branch=master)](http://travis-ci.org/noblesamurai/heroku-formation) [![NPM version](https://badge-me.herokuapp.com/api/npm/heroku-formation.png)](http://badges.enytc.com/for/npm/heroku-formation)
-
+# Heroku-formation [![Build Status](https://travis-ci.com/noblesamurai/heroku-formation.svg?branch=master)](http://travis-ci.org/noblesamurai/heroku-formation)
+[![NPM](https://nodei.co/npm-dl/heroku-formation.png)](https://nodei.co/npm/heroku-formation/)
 > Enacts a requested dyno formation on heroku across multiple apps.
 
 ## Purpose
