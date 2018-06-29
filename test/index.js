@@ -1,8 +1,7 @@
 const expect = require('chai').expect;
-
-describe('my thing', function () {
-  it('should work', function () {
-    expect(true).to.be.true;
-    throw new Error('unimplemented');
+describe('heroku-formation', function () {
+  it('exports correct functions', function () {
+    const module = require('..');
+    expect(module).to.have.all.keys('applyFormation', 'checkFormation');
   });
 });

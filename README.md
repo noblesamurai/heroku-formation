@@ -1,33 +1,61 @@
-# Heroku-transparent-up [![Build Status](https://secure.travis-ci.org/noblesamurai/heroku-transparent-up.png?branch=master)](http://travis-ci.org/noblesamurai/heroku-transparent-up) [![NPM version](https://badge-me.herokuapp.com/api/npm/heroku-transparent-up.png)](http://badges.enytc.com/for/npm/heroku-transparent-up)
+# Heroku-formation [![Build Status](https://secure.travis-ci.org/noblesamurai/heroku-formation.png?branch=master)](http://travis-ci.org/noblesamurai/heroku-formation) [![NPM version](https://badge-me.herokuapp.com/api/npm/heroku-formation.png)](http://badges.enytc.com/for/npm/heroku-formation)
 
-> Proxies to a heroku web dyno, starting up required dynos transparently.
+> Enacts a requested dyno formation on heroku across multiple apps.
 
 ## Purpose
-- What problem does this module solve? At least a few sentences.
-PLEASE_FILL_IN_HERE
+Allows you to request a dyno formation across multiple micro-services and wait
+until it is effective.
+
+## Installation
+```bash
+$ npm install heroku-formation
+```
 
 ## Usage
-
 ```js
-// Several examples of usage.
-// Usually copying and pasting code from the tests and making the code standalone suffices.
-// PLEASE_FILL_IN_HERE
+const Heroku = require('heroku-client');
+const heroku = new Heroku({ token: 'mytoken' });
+const { applyFormation, checkFormation } = require('heroku-formation');
+
+async function main () {
+  await applyFormation(heroku, 'appName', [{ type: 'web', quantity: 1 }, { type: 'worker', quantity: 2}]);
+  // We get here after formation is enacted.
+  await checkFormation(heroku, 'appName', [{ type: 'web', quantity: 2 }]); // false
+  //  false
+  await checkFormation(heroku, 'appName', [{ type: 'web', quantity: 1 }, { type: 'worker', quantity: 2 }]); // true
+}
 ```
+
+See [this
+doco](https://devcenter.heroku.com/articles/platform-api-reference#formation)
+for the format of the formation.
 
 ## API
 
-PLEASE_FILL_IN_HERE
+## applyFormation
+Given an app and dyno formation, scale it and wait until formation in place.(app, formation) ⇒ <code>Promise</code>
+**Kind**: global function  
+**Returns**: <code>Promise</code> - fulfilled when scale complete.  
 
-Note: To regenerate this section from the jsdoc run `npm run docs` and paste
-the output above.
+| Param | Type | Description |
+| --- | --- | --- |
+| app | <code>string</code> | app name |
+| formation | <code>Array.&lt;object&gt;</code> | [{ type: 'web', quantity: 1}, { type: 'worker', quantity: 2}] |
 
-## Installation
+<a name="checkFormation"></a>
 
-This module is installed via npm:
+## checkFormation(heroku, app, formation) ⇒ <code>Promise.&lt;Boolean&gt;</code>
+**Kind**: global function  
+**See**: https://devcenter.heroku.com/articles/platform-api-reference#formation
+Check whether app is in requested formation.  
 
-``` bash
-$ npm install heroku-transparent-up
-```
+| Param | Type |
+| --- | --- |
+| heroku | <code>Heroku</code> |
+| app | <code>string</code> |
+| formation | <code>Array.&lt;object&gt;</code> |
+
+
 ## License
 
 The BSD License
@@ -60,4 +88,3 @@ LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
 ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
