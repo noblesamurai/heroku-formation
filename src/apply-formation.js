@@ -20,7 +20,8 @@ function waitForScale (heroku, app, formation) {
       const result = await checkFormation(heroku, app, formation);
       return result ? Promise.resolve() : Promise.reject(new Error('got false'));
     },
-    strategy: 'linear-backoff'
+    strategy: 'linear-backoff',
+    retries: 6
   });
 }
 /**
